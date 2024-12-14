@@ -15,9 +15,8 @@ const isPalindrome = function (string) {
   for (let i = stringNormalized.length - 1; i >= 0; i = i - 1) {
     stringRevert = stringRevert + stringNormalized[i];
   }
-  return (stringRevert === stringNormalized);
+  return stringRevert === stringNormalized;
 };
-
 
 isPalindrome ('Лёша на полке клопа нашёл ');
 
