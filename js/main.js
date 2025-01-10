@@ -98,5 +98,4 @@ const collectPhotos = () => { // функция, собирающая описа
   return photoArray;
 };
 
-console.log(collectPhotos());
 
