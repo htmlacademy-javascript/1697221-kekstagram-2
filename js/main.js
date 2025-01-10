@@ -99,3 +99,4 @@ const collectPhotos = () => { // функция, собирающая описа
 };
 
 
+collectPhotos ();
