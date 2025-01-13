@@ -46,7 +46,7 @@ const getRandomNumber = (min, max) => { // функция, выбирающая 
   return Math.floor(result);
 };
 
-const getId = () => {
+const getId = () => { // функция, создающая id по порядку
   let startId = 1;
   return function () {
     return startId++;
@@ -75,8 +75,8 @@ const collectComments = () => { // функция, собирающая комм
 };
 
 const describePhoto = () => ({ // функция, создающая объект "описание фотографии"
-  id: photoId(), // использует первый элемент из массива выше, а после этого удаляет его из массива
-  url: `photos/${ urlId() }.jpg`, // использует первый элемент из массива выше, а после этого удаляет его из массива
+  id: photoId(),
+  url: `photos/${ urlId() }.jpg`,
   description: DESCRIPTION[getRandomNumber(0, DESCRIPTION.length - 1)],
   likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
   comments: collectComments() ,
