@@ -46,10 +46,20 @@ const getRandomNumber = (min, max) => { // функция, выбирающая 
   return Math.floor(result);
 };
 
-let commentCounter = 1; // счетчик, используемый для генераци id комментария
+const getId = () => {
+  let startId = 1;
+  return function () {
+    return startId++;
+  };
+};
+
+const commentId = getId();
+const photoId = getId();
+const urlId = getId();
+
 
 const generateComment = () => ({ // функция, создающая объект "комментарий"
-  id: commentCounter++,
+  id:  commentId(),
   avatar: `img/avatar-${ getRandomNumber(1, AVATAR_QUANTITY) }.svg`,
   message: MESSAGES[getRandomNumber(0, MESSAGES.length - 1)],
   name: NAMES[getRandomNumber(0, NAMES.length - 1)],
@@ -64,26 +74,9 @@ const collectComments = () => { // функция, собирающая комм
   return comments;
 };
 
-const getId = (min, max) => { // функция, создающая массив из неповторяющихся чисел в заданном диапазоне
-  const usedId = [];
-
-  while (usedId.length < max - min + 1) {
-    let currentId = getRandomNumber(min, max);
-
-    while (usedId.includes(currentId)) {
-      currentId = getRandomNumber(min, max);
-    }
-    usedId.push(currentId);
-  }
-  return usedId;
-};
-
-const photoId = getId(1, QUANTITY); // массив для поля id, который будет использоваться при генерации объекта "описание фотографии"
-const urlId = getId(1, QUANTITY); // массив для поля id, который будет использоваться при генерации объекта "описание фотографии"
-
 const describePhoto = () => ({ // функция, создающая объект "описание фотографии"
-  id: photoId.shift(), // использует первый элемент из массива выше, а после этого удаляет его из массива
-  url: `photos/${ urlId.shift() }.jpg`, // использует первый элемент из массива выше, а после этого удаляет его из массива
+  id: photoId(), // использует первый элемент из массива выше, а после этого удаляет его из массива
+  url: `photos/${ urlId() }.jpg`, // использует первый элемент из массива выше, а после этого удаляет его из массива
   description: DESCRIPTION[getRandomNumber(0, DESCRIPTION.length - 1)],
   likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
   comments: collectComments() ,
@@ -97,6 +90,5 @@ const collectPhotos = () => { // функция, собирающая описа
   }
   return photoArray;
 };
-
 
 collectPhotos ();
