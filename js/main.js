@@ -73,7 +73,7 @@ const collectComments = () => { // функция, собирающая комм
   return comments;
 };
 
-const describePhoto = () => {// функция, создающая объект "описание фотографии"
+const createPhotoDescription = () => {// функция, создающая объект "описание фотографии"
   const photoId = getPhotoId ();
   return {
     id: photoId,
@@ -83,13 +83,13 @@ const describePhoto = () => {// функция, создающая объект 
     comments: collectComments() ,
   };
 };
-const collectPhotos = () => { // функция, собирающая описания фотографий в один массив
+const createPhotoArray = () => { // функция, собирающая описания фотографий в один массив
   const photoArray = [];
 
   for (let i = 1; i <= QUANTITY; i++) {
-    photoArray.push(describePhoto());
+    photoArray.push(createPhotoDescription());
   }
   return photoArray;
 };
 
-collectPhotos ();
+createPhotoArray ();
