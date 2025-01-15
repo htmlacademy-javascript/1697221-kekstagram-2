@@ -45,3 +45,23 @@ const transformNumber = function (number) {
 };
 
 transformNumber (-4.568);
+
+
+// Напишите функцию, которая принимает время начала и конца рабочего дня, а также время старта и продолжительность встречи в минутах и возвращает true, если встреча не выходит за рамки рабочего дня, и false, если выходит.
+
+const MINUTES_IN_HOUR = 60;
+
+const transformTime = (time) => {
+  const [hours, minutes] = time.split(':').map(Number);
+  return hours * MINUTES_IN_HOUR + minutes;
+};
+
+const checkMeeting = (workStarts, workEnds, meetingStarts, duration) => {
+  const workTimeStarts = transformTime(workStarts);
+  const workTimeEnds = transformTime(workEnds);
+  const meetingTimeStarts = transformTime(meetingStarts);
+
+  return (workTimeStarts <= meetingTimeStarts + duration && meetingTimeStarts + duration <= workTimeEnds);
+};
+
+checkMeeting();
