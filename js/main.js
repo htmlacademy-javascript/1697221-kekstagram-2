@@ -53,13 +53,12 @@ const getId = () => { // функция, создающая id по порядк
   };
 };
 
-const commentId = getId();
-const photoId = getId();
-const urlId = getId();
+const getCommentId = getId();
+const getPhotoId = getId();
 
 
 const generateComment = () => ({ // функция, создающая объект "комментарий"
-  id:  commentId(),
+  id:  getCommentId(),
   avatar: `img/avatar-${ getRandomNumber(1, AVATAR_QUANTITY) }.svg`,
   message: MESSAGES[getRandomNumber(0, MESSAGES.length - 1)],
   name: NAMES[getRandomNumber(0, NAMES.length - 1)],
@@ -74,14 +73,16 @@ const collectComments = () => { // функция, собирающая комм
   return comments;
 };
 
-const describePhoto = () => ({ // функция, создающая объект "описание фотографии"
-  id: photoId(),
-  url: `photos/${ urlId() }.jpg`,
-  description: DESCRIPTION[getRandomNumber(0, DESCRIPTION.length - 1)],
-  likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
-  comments: collectComments() ,
-});
-
+const describePhoto = () => {// функция, создающая объект "описание фотографии"
+  const photoId = getPhotoId ();
+  return {
+    id: photoId,
+    url: `photos/${ photoId }.jpg`,
+    description: DESCRIPTION[getRandomNumber(0, DESCRIPTION.length - 1)],
+    likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
+    comments: collectComments() ,
+  };
+};
 const collectPhotos = () => { // функция, собирающая описания фотографий в один массив
   const photoArray = [];
 
