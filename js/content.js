@@ -1,12 +1,5 @@
-import {createPhotoArray} from './data.js';
-
 const picturesSection = document.querySelector('.pictures');
-
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-
-const fragment = document.createDocumentFragment();
-
-const pictureArray = createPhotoArray();
 
 const generatePicture = ({url, description, likes, comments}) => {
   const element = pictureTemplate.cloneNode(true);
@@ -22,13 +15,14 @@ const generatePicture = ({url, description, likes, comments}) => {
 };
 
 const generatePosts = (array) => {
+  const fragment = document.createDocumentFragment();
+
   array.forEach((item) => {
     const post = generatePicture(item);
     fragment.append(post);
   });
+
+  picturesSection.append(fragment);
 };
 
-generatePosts(pictureArray);
-
-picturesSection.append(fragment);
-
+export {generatePosts};
