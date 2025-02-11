@@ -12,4 +12,6 @@ const getId = () => { // функция, создающая id по порядк
   };
 };
 
-export {getRandomNumber, getId};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomNumber, getId, isEscapeKey};

@@ -1,4 +1,7 @@
-import {createPhotoArray} from './data.js';
+import {dataArray} from './data.js';
 import {generatePosts} from './content.js';
+import './gallery.js';
 
-generatePosts(createPhotoArray());
+generatePosts(dataArray);
+
+
