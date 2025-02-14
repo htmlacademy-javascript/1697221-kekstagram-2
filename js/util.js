@@ -1,3 +1,7 @@
+const KEYS = {
+  ESCAPE: 'Escape',
+};
+
 const getRandomNumber = (min, max) => { // функция, выбирающая число из заданного диапазона
   const lower = Math.ceil(Math.min(min, max));
   const upper = Math.floor(Math.max(min, max));
@@ -12,6 +16,6 @@ const getId = () => { // функция, создающая id по порядк
   };
 };
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEscapeKey = (evt) => evt.key === KEYS.ESCAPE;
 
 export {getRandomNumber, getId, isEscapeKey};

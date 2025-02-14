@@ -1,6 +1,5 @@
 import {dataArray} from './data.js';
-import {generatePosts} from './content.js';
-import './gallery.js';
+import {generatePosts} from './previews.js';
 
 generatePosts(dataArray);
 

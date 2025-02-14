@@ -1,3 +1,7 @@
+import {dataArray} from './data.js';
+import {openBigPicture} from './modal.js';
+
+
 const picturesSection = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
@@ -24,5 +28,17 @@ const generatePosts = (array) => {
   picturesSection.append(fragment);
 };
 
+
+picturesSection.addEventListener('click', (evt) => {
+  if (evt.target.closest('.picture')) {
+    evt.preventDefault();
+
+    const getPictureData = (index) => dataArray.find((dataItem) => dataItem.id === index);
+
+    const id = Number(evt.target.closest('.picture').dataset.id);
+    const item = getPictureData (id);
+    openBigPicture(item);
+  }
+});
 
 export {picturesSection, generatePosts};
