@@ -29,6 +29,8 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+let onCommentLoader;
+
 function openBigPicture (item) {
   let startValue = 0;
   let finalValue = startValue + STEP;
@@ -39,27 +41,32 @@ function openBigPicture (item) {
   renderComments(startValue, finalValue, item.comments);
   shownCommentCounter.textContent = commentsList.childElementCount;
 
-  if (item.comments.length <= STEP) {
+  if (finalValue >= item.comments.length) {
     commentLoader.classList.add('hidden');
   } else {
     commentLoader.classList.remove('hidden');
   }
 
-  commentLoader.addEventListener('click', () => {
+  onCommentLoader = () => {
     startValue = startValue + STEP;
     finalValue = startValue + STEP;
     renderComments(startValue, finalValue, item.comments);
     shownCommentCounter.textContent = commentsList.childElementCount;
 
-    if (commentsList.childElementCount === item.comments.length) {
+    console.log(startValue, finalValue, item.comments.length);
+    // if (commentsList.childElementCount === item.comments.length) {
+    if (finalValue >= item.comments.length) {
       commentLoader.classList.add('hidden');
     }
-  });
+  };
+
+  commentLoader.addEventListener('click', onCommentLoader);
 }
 
 function closeBigPicture () {
   modal.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
+  commentLoader.removeEventListener('click', onCommentLoader);
   body.classList.remove('modal-open');
 }
 
