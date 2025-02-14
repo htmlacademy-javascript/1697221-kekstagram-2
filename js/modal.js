@@ -53,8 +53,6 @@ function openBigPicture (item) {
     renderComments(startValue, finalValue, item.comments);
     shownCommentCounter.textContent = commentsList.childElementCount;
 
-    console.log(startValue, finalValue, item.comments.length);
-    // if (commentsList.childElementCount === item.comments.length) {
     if (finalValue >= item.comments.length) {
       commentLoader.classList.add('hidden');
     }
