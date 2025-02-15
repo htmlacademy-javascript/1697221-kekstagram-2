@@ -1,4 +1,4 @@
-const KEYS = {
+const Keys = {
   ESCAPE: 'Escape',
 };
 
@@ -16,6 +16,6 @@ const getId = () => { // функция, создающая id по порядк
   };
 };
 
-const isEscapeKey = (evt) => evt.key === KEYS.ESCAPE;
+const isEscapeKey = (evt) => evt.key === Keys.ESCAPE;
 
 export {getRandomNumber, getId, isEscapeKey};

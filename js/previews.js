@@ -33,10 +33,10 @@ picturesSection.addEventListener('click', (evt) => {
   if (evt.target.closest('.picture')) {
     evt.preventDefault();
 
-    const getPictureData = (index) => dataArray.find((dataItem) => dataItem.id === index);
+    const getPictureData = (id) => dataArray.find((dataItem) => dataItem.id === id);
 
-    const id = Number(evt.target.closest('.picture').dataset.id);
-    const item = getPictureData (id);
+    const idNumber = Number(evt.target.closest('.picture').dataset.id);
+    const item = getPictureData (idNumber);
     openBigPicture(item);
   }
 });
