@@ -18,4 +18,12 @@ const getId = () => { // функция, создающая id по порядк
 
 const isEscapeKey = (evt) => evt.key === Keys.ESCAPE;
 
-export {getRandomNumber, getId, isEscapeKey};
+const hideElement = (element) => {
+  element.classList.add('hidden');
+};
+
+const showElement = (element) => {
+  element.classList.remove('hidden');
+};
+
+export {getRandomNumber, getId, isEscapeKey, hideElement, showElement};

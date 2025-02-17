@@ -1,18 +1,17 @@
-const modal = document.querySelector('.big-picture');
-const commentsList = modal.querySelector('.social__comments');
+import {hideElement, showElement} from './util.js';
+
+const socialSection = document.querySelector('.social');
+const commentsList = socialSection.querySelector('.social__comments');
+const commentLoader = socialSection.querySelector('.social__comments-loader');
+const shownCommentCounter = socialSection.querySelector('.social__comment-shown-count');
+
+const STEP = 5;
 
 const createComment = ({avatar, name, message}) => {
   const commentItem = document.createElement('li');
   commentItem.classList.add('social__comment');
-  const image = document.createElement('img');
-  image.classList.add('social__picture');
-  image.src = avatar;
-  image.alt = name;
-  image.width = 35;
-  image.height = 35;
-  const commentText = document.createElement('p');
-  commentText.textContent = message;
-  commentItem.append(image, commentText);
+  commentItem.innerHTML = `<img class="social__picture" src="${avatar}" alt="${name}" width="35" height="35">
+              <p class="social__text">${message}</p>`;
   return commentItem;
 };
 
@@ -24,4 +23,36 @@ const renderComments = (start, final, comments) => {
   });
 };
 
-export {renderComments};
+let onCommentLoader;
+
+const showComments = (item) => {
+  commentsList.innerHTML = '';
+  let startValue = 0;
+  let finalValue = startValue + STEP;
+  renderComments(startValue, finalValue, item.comments);
+  shownCommentCounter.textContent = commentsList.childElementCount;
+
+  if (finalValue >= item.comments.length) {
+    hideElement (commentLoader);
+  } else {
+    showElement(commentLoader);
+  }
+
+  onCommentLoader = () => {
+    startValue = startValue + STEP;
+    finalValue = startValue + STEP;
+    renderComments(startValue, finalValue, item.comments);
+    shownCommentCounter.textContent = commentsList.childElementCount;
+
+    if (finalValue >= item.comments.length) {
+      hideElement (commentLoader);
+      commentLoader.removeEventListener('click', onCommentLoader);
+    }
+  };
+
+  commentLoader.addEventListener('click', onCommentLoader);
+};
+
+
+export {renderComments, showComments, onCommentLoader};
+
