@@ -1,11 +1,9 @@
-import {dataArray} from './data.js';
 import {openBigPicture} from './modal.js';
-
 
 const picturesSection = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const generatePicture = ({url, description, likes, comments, id}) => {
+const createPreview = ({url, description, likes, comments, id}) => {
   const element = pictureTemplate.cloneNode(true);
   const img = element.querySelector('.picture__img');
   img.src = url;
@@ -17,28 +15,29 @@ const generatePicture = ({url, description, likes, comments, id}) => {
   return element;
 };
 
-const generatePosts = (array) => {
+const renderMiniatures = (array) => {
   const fragment = document.createDocumentFragment();
-
   array.forEach((item) => {
-    const post = generatePicture(item);
+    const post = createPreview(item);
     fragment.append(post);
   });
-
   picturesSection.append(fragment);
 };
 
+const getPictureData = (array, id) => array.find((dataItem) => dataItem.id === id);
 
-picturesSection.addEventListener('click', (evt) => {
-  if (evt.target.closest('.picture')) {
-    evt.preventDefault();
+const renderGallery = (array) => {
+  renderMiniatures(array);
 
-    const getPictureData = (id) => dataArray.find((dataItem) => dataItem.id === id);
+  picturesSection.addEventListener('click', (evt) => {
+    if (evt.target.closest('.picture')) {
+      evt.preventDefault();
+      const id = Number(evt.target.closest('.picture').dataset.id);
+      const item = getPictureData (array, id);
+      openBigPicture(item);
+    }
+  });
+};
 
-    const idNumber = Number(evt.target.closest('.picture').dataset.id);
-    const item = getPictureData (idNumber);
-    openBigPicture(item);
-  }
-});
 
-export {picturesSection, generatePosts};
+export {renderGallery};

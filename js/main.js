@@ -1,6 +1,6 @@
-import {dataArray} from './data.js';
-import {generatePosts} from './previews.js';
+import {createPhotoArray} from './data.js';
+import {renderGallery} from './previews.js';
 
-generatePosts(dataArray);
+renderGallery(createPhotoArray());
 
 

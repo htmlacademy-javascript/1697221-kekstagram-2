@@ -80,6 +80,6 @@ const createPhotoArray = () => { // функция, собирающая опи�
   return photoArray;
 };
 
-const dataArray = createPhotoArray();
+// const dataArray = createPhotoArray();
 
-export {dataArray};
+export {createPhotoArray};
