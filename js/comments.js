@@ -47,7 +47,7 @@ const showComments = (item) => {
   }
 
   const onCommentLoaderClick = () => {
-    startValue += + STEP_LOADING_COMMENTS;
+    startValue += STEP_LOADING_COMMENTS;
     finalValue = startValue + STEP_LOADING_COMMENTS;
 
     renderComments(startValue, finalValue, item.comments);

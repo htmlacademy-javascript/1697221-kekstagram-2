@@ -15,7 +15,7 @@ const createPreview = ({url, description, likes, comments, id}) => {
   return element;
 };
 
-const renderMiniatures = (array) => {
+const renderPreviews = (array) => {
   const fragment = document.createDocumentFragment();
   array.forEach((item) => {
     const post = createPreview(item);
@@ -27,7 +27,7 @@ const renderMiniatures = (array) => {
 const getPictureData = (array, id) => array.find((dataItem) => dataItem.id === id);
 
 const renderGallery = (array) => {
-  renderMiniatures(array);
+  renderPreviews(array);
 
   picturesSection.addEventListener('click', (evt) => {
     if (evt.target.closest('.picture')) {
