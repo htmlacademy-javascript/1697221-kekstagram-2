@@ -1,3 +1,7 @@
+const Keys = {
+  ESCAPE: 'Escape',
+};
+
 const getRandomNumber = (min, max) => { // функция, выбирающая число из заданного диапазона
   const lower = Math.ceil(Math.min(min, max));
   const upper = Math.floor(Math.max(min, max));
@@ -12,4 +16,14 @@ const getId = () => { // функция, создающая id по порядк
   };
 };
 
-export {getRandomNumber, getId};
+const isEscapeKey = (evt) => evt.key === Keys.ESCAPE;
+
+const hideElement = (element) => {
+  element.classList.add('hidden');
+};
+
+const showElement = (element) => {
+  element.classList.remove('hidden');
+};
+
+export {getRandomNumber, getId, isEscapeKey, hideElement, showElement};

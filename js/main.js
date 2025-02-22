@@ -1,4 +1,6 @@
 import {createPhotoArray} from './data.js';
-import {generatePosts} from './content.js';
+import {renderGallery} from './previews.js';
 
-generatePosts(createPhotoArray());
+renderGallery(createPhotoArray());
+
+
