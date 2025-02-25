@@ -13,7 +13,7 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const onUploadControlClick = () => {
+const onUploadControlChange = () => {
   showElement(editingForm);
   body.classList.add('modal');
   document.addEventListener('keydown', onDocumentKeydown);
@@ -25,7 +25,7 @@ function onCloseButtonClick () {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-uploadControl.addEventListener('click', onUploadControlClick); //click или change?
+uploadControl.addEventListener('change', onUploadControlChange); //click или change?
 
 closeButton.addEventListener('click', onCloseButtonClick);
 

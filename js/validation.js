@@ -38,7 +38,6 @@ const validateHashtags = (value) => {
   return true;
 };
 
-
 pristine.addValidator(
   hashtagField,
   validateHashtags,
