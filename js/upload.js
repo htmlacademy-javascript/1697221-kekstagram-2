@@ -29,7 +29,7 @@ const onUploadControlChange = () => {
   document.addEventListener('keydown', onDocumentKeydown);
   controlScaleBigger.addEventListener('click', onControlScaleBiggerClick);
   controlScaleSmaller.addEventListener('click', onControlScaleSmallerClick);
-  needSlider ();
+  needSlider ();// + сюда же нужно добавить обработчики от слайдера и фильтров?
 };
 
 function closeUploadForm () {

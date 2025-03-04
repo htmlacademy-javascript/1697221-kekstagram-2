@@ -35,7 +35,7 @@ noUiSlider.create(effectSlider, {
   step: 0.1,
   connect: 'lower',
   format: {
-    to: function (value) {
+    to: function (value) { //нужны ли обе части в методе?
       if (Number.isInteger(value)) {
         return value.toFixed(0);
       }
@@ -74,5 +74,7 @@ effectList.addEventListener('change', (evt) => {
     start: EffectSettings[effect].start,});
   }
 });
+
+//что правильно экспортировать отсюда и из модуля с валидацией в main.js ?
 
 export {needSlider};
