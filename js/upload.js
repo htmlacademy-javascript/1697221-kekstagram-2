@@ -1,4 +1,6 @@
 import {isEscapeKey, hideElement, showElement} from './util.js';
+import {onControlScaleBiggerClick, onControlScaleSmallerClick} from './scaling.js';
+import { needSlider } from './effects.js';
 
 const body = document.body;
 const uploadForm = document.querySelector('.img-upload__form');
@@ -8,8 +10,14 @@ const closeButton = uploadForm.querySelector('.img-upload__cancel');
 const hashtagField = uploadForm.querySelector('.text__hashtags');
 const descriptionField = uploadForm.querySelector('.text__description');
 
+const controlScaleSmaller = document.querySelector('.scale__control--smaller');
+const controlScaleBigger = document.querySelector('.scale__control--bigger');
+
+
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if ((hashtagField === document.activeElement || descriptionField === document.activeElement) && isEscapeKey(evt)) {
+    evt.preventDefault();
+  } else if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUploadForm();
   }
@@ -19,12 +27,17 @@ const onUploadControlChange = () => {
   showElement(editingForm);
   body.classList.add('modal');
   document.addEventListener('keydown', onDocumentKeydown);
+  controlScaleBigger.addEventListener('click', onControlScaleBiggerClick);
+  controlScaleSmaller.addEventListener('click', onControlScaleSmallerClick);
+  needSlider ();
 };
 
 function closeUploadForm () {
   hideElement(editingForm);
   body.classList.remove('modal');
   document.removeEventListener('keydown', onDocumentKeydown);
+  controlScaleBigger.removeEventListener('click', onControlScaleBiggerClick);
+  controlScaleSmaller.removeEventListener('click', onControlScaleSmallerClick);
   uploadControl.value = '';
   hashtagField.value = '';
   descriptionField.value = '';

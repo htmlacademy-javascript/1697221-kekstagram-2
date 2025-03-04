@@ -3,8 +3,6 @@ const SCALE_STEP = 25;
 const MAX_SCALE_VALUE = 100;
 const MIN_SCALE_VALUE = 25;
 
-const controlScaleSmaller = document.querySelector('.scale__control--smaller');
-const controlScaleBigger = document.querySelector('.scale__control--bigger');
 const controlScaleValue = document.querySelector('.scale__control--value');
 const imagePreview = document.querySelector('.img-upload__preview');
 
@@ -34,5 +32,4 @@ const onControlScaleSmallerClick = () => {
   imagePreview.style.transform = `scale(${ currentValue / 100 })`;
 };
 
-controlScaleBigger.addEventListener('click',onControlScaleBiggerClick);
-controlScaleSmaller.addEventListener('click', onControlScaleSmallerClick);
+export {onControlScaleBiggerClick, onControlScaleSmallerClick};

@@ -13,7 +13,6 @@ const uploadForm = document.querySelector('.img-upload__form');
 const hashtagField = uploadForm.querySelector('.text__hashtags');
 const descriptionField = uploadForm.querySelector('.text__description');
 
-
 const pristine = new Pristine (uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
