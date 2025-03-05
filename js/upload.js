@@ -9,7 +9,6 @@ const editingForm = uploadForm.querySelector('.img-upload__overlay');
 const closeButton = uploadForm.querySelector('.img-upload__cancel');
 const hashtagField = uploadForm.querySelector('.text__hashtags');
 const descriptionField = uploadForm.querySelector('.text__description');
-
 const controlScaleSmaller = document.querySelector('.scale__control--smaller');
 const controlScaleBigger = document.querySelector('.scale__control--bigger');
 
