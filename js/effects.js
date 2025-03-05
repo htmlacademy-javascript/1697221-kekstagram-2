@@ -20,10 +20,8 @@ const isEffect = () => {
   const effect = document.querySelector('input[name="effect"]:checked').value;
   if(effect in EffectSettings) {
     showElement(effectLevel);
-    showElement(effectSlider);
   } else {
     hideElement(effectLevel);
-    hideElement(effectSlider);
     imagePreview.style.filter = 'none';
   }
 };
