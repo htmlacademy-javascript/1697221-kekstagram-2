@@ -1,6 +1,6 @@
 import {isEscapeKey, hideElement, showElement} from './util.js';
 import {onControlScaleBiggerClick, onControlScaleSmallerClick} from './scaling.js';
-import { isEffect } from './effects.js';
+import { isEffect, initSlider } from './effects.js';
 
 const body = document.body;
 const uploadForm = document.querySelector('.img-upload__form');
@@ -29,7 +29,8 @@ const onUploadControlChange = () => {
   document.addEventListener('keydown', onDocumentKeydown);
   controlScaleBigger.addEventListener('click', onControlScaleBiggerClick);
   controlScaleSmaller.addEventListener('click', onControlScaleSmallerClick);
-  isEffect();// + сюда же нужно добавить обработчики от слайдера и фильтров?
+  isEffect();
+  initSlider();
 };
 
 function closeUploadForm () {
