@@ -8,13 +8,15 @@ const EffectSettings = {
   heat:  { min: 1, max: 3, step: 0.1, start : 3, filter: 'brightness' },
 };
 
+const SLIDER_CONNECT = 'lower';
+
 const effectLevel = document.querySelector('.img-upload__effect-level');
 const effectSlider = document.querySelector('.effect-level__slider');
 const effectValue = document.querySelector('.effect-level__value');
 const effectList = document.querySelector('.effects__list');
 const imagePreview = document.querySelector('.img-upload__preview');
 
-const needSlider = () => {
+const isEffect = () => {
   const effect = document.querySelector('input[name="effect"]:checked').value;
   if(effect in EffectSettings) {
     showElement(effectLevel);
@@ -26,23 +28,21 @@ const needSlider = () => {
   }
 };
 
+
 noUiSlider.create(effectSlider, {
   range: {
-    min: 0,
-    max: 1,
+    min: EffectSettings.chrome.min,
+    max: EffectSettings.chrome.max,
   },
-  start: 1,
-  step: 0.1,
-  connect: 'lower',
+  start: EffectSettings.chrome.start,
+  step: EffectSettings.chrome.step,
+  connect: SLIDER_CONNECT,
   format: {
-    to: function (value) { //нужны ли обе части в методе?
-      if (Number.isInteger(value)) {
-        return value.toFixed(0);
-      }
-      return value.toFixed(1);
+    to: function (value) {
+      return +value;
     },
     from: function (value) {
-      return parseFloat(value);
+      return value;
     },
   },
 });
@@ -52,8 +52,8 @@ const applyEffect = ({filter, unit = ''}, value) => {
 };
 
 effectSlider.noUiSlider.on('update', () => {
-  effectValue.value = effectSlider.noUiSlider.get();
-  const currentEffectValue = Number(effectValue.value);
+  const currentEffectValue = effectSlider.noUiSlider.get();
+  effectValue.value = currentEffectValue;
   const effect = document.querySelector('input[name="effect"]:checked').value;
   if (effect in EffectSettings) {
     applyEffect(EffectSettings[effect], currentEffectValue);
@@ -63,18 +63,17 @@ effectSlider.noUiSlider.on('update', () => {
 });
 
 effectList.addEventListener('change', (evt) => {
-  needSlider();
+  isEffect();
   const effect = evt.target.value;
   if (effect in EffectSettings) {
-    effectSlider.noUiSlider.updateOptions({range: {
-      min: EffectSettings[effect].min,
-      max: EffectSettings[effect].max,
-    },
-    step: EffectSettings[effect].step,
-    start: EffectSettings[effect].start,});
+    effectSlider.noUiSlider.updateOptions(
+      {range: {
+        min: EffectSettings[effect].min,
+        max: EffectSettings[effect].max,
+      },
+      step: EffectSettings[effect].step,
+      start: EffectSettings[effect].start,});
   }
 });
 
-//что правильно экспортировать отсюда и из модуля с валидацией в main.js ?
-
-export {needSlider};
+export {isEffect};
