@@ -44,7 +44,4 @@ pristine.addValidator(hashtagField, validateHashtagName, Errors.hashtagName);
 pristine.addValidator(hashtagField, validateHashtagDuplicate, Errors.hashtagDuplicate);
 pristine.addValidator(descriptionField, validateDescription, Errors.commentLength);
 
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+export {pristine};

@@ -1,6 +1,7 @@
 import {isEscapeKey, hideElement, showElement} from './util.js';
+import { pristine } from './validation.js';
 import {onControlScaleBiggerClick, onControlScaleSmallerClick} from './scaling.js';
-import { isEffect, initSlider } from './effects.js';
+import { initSlider } from './effects.js';
 
 const body = document.body;
 const uploadForm = document.querySelector('.img-upload__form');
@@ -28,7 +29,6 @@ const onUploadControlChange = () => {
   document.addEventListener('keydown', onDocumentKeydown);
   controlScaleBigger.addEventListener('click', onControlScaleBiggerClick);
   controlScaleSmaller.addEventListener('click', onControlScaleSmallerClick);
-  isEffect();
   initSlider();
 };
 
@@ -49,4 +49,10 @@ uploadControl.addEventListener('change', onUploadControlChange);
 
 closeButton.addEventListener('click', onCloseButtonClick);
 
+uploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  if (pristine.validate()) {
+    uploadForm.submit();
+  }
+});
 

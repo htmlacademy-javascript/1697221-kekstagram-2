@@ -8,28 +8,28 @@ const imagePreview = document.querySelector('.img-upload__preview');
 
 let currentValue = DEFAULT_SCALE_VALUE;
 
-const increaseScale = () => {
-  if (currentValue < MAX_SCALE_VALUE) {
-    currentValue += SCALE_STEP;
-  }
-};
 
-const decreaseScale = () => {
-  if (currentValue > MIN_SCALE_VALUE) {
+const changeScale = (direction) => {
+  if (direction === 'increase' && currentValue < MAX_SCALE_VALUE) {
+    currentValue += SCALE_STEP;
+  } else if (direction === 'decrease' && currentValue > MIN_SCALE_VALUE) {
     currentValue -= SCALE_STEP;
   }
 };
 
+const changePictureScale = (value) => {
+  controlScaleValue.value = `${value}%`;
+  imagePreview.style.transform = `scale(${ value / 100 })`;
+};
+
 const onControlScaleBiggerClick = () => {
-  increaseScale();
-  controlScaleValue.value = `${currentValue}%`;
-  imagePreview.style.transform = `scale(${ currentValue / 100 })`;
+  changeScale('increase');
+  changePictureScale(currentValue);
 };
 
 const onControlScaleSmallerClick = () => {
-  decreaseScale();
-  controlScaleValue.value = `${currentValue}%`;
-  imagePreview.style.transform = `scale(${ currentValue / 100 })`;
+  changeScale('decrease');
+  changePictureScale(currentValue);
 };
 
 export {onControlScaleBiggerClick, onControlScaleSmallerClick};

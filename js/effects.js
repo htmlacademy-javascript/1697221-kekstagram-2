@@ -48,6 +48,8 @@ const initSlider = () => {
     },
   });
 
+  isEffect();
+
   const applyEffect = ({filter, unit = ''}, value) => {
     imagePreview.style.filter = `${filter }(${ value }${unit })`;
   };
@@ -78,4 +80,4 @@ const initSlider = () => {
   });
 };
 
-export { isEffect, initSlider};
+export {initSlider};
