@@ -52,7 +52,8 @@ closeButton.addEventListener('click', onCloseButtonClick);
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
-    uploadForm.submit();
+    uploadForm.submit(); //в какой момент убирать обработчик и что правильно в подключать в main.js?
   }
 });
+
 
