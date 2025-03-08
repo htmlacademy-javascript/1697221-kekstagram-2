@@ -1,6 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {showComments} from './comments.js';
 
+
 const body = document.body;
 const modal = document.querySelector('.big-picture');
 const closeButton = modal.querySelector('.big-picture__cancel');

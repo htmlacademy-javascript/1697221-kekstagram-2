@@ -13,14 +13,12 @@ const uploadForm = document.querySelector('.img-upload__form');
 const hashtagField = uploadForm.querySelector('.text__hashtags');
 const descriptionField = uploadForm.querySelector('.text__description');
 
-
 const pristine = new Pristine (uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
   errorTextClass: 'img-upload__field-wrapper--error'
 });
-
 
 const getHashtags = (value) => value.trim() ? value.toLowerCase().trim().split(/\s+/) : [];
 
@@ -46,7 +44,4 @@ pristine.addValidator(hashtagField, validateHashtagName, Errors.hashtagName);
 pristine.addValidator(hashtagField, validateHashtagDuplicate, Errors.hashtagDuplicate);
 pristine.addValidator(descriptionField, validateDescription, Errors.commentLength);
 
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+export {pristine};
