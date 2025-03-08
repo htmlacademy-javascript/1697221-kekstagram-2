@@ -15,7 +15,7 @@ const effectValue = document.querySelector('.effect-level__value');
 const effectList = document.querySelector('.effects__list');
 const imagePreview = document.querySelector('.img-upload__preview');
 
-const isEffect = () => {
+const updateEffectVisibillity = () => {
   const effect = document.querySelector('input[name="effect"]:checked').value;
   if(effect in EffectSettings) {
     showElement(effectLevel);
@@ -25,11 +25,7 @@ const isEffect = () => {
   }
 };
 
-const initSlider = () => {
-  if (effectSlider.noUiSlider) {
-    effectSlider.noUiSlider.destroy();
-  }
-
+const createSlider = () => {
   noUiSlider.create(effectSlider, {
     range: {
       min: EffectSettings.chrome.min,
@@ -47,8 +43,11 @@ const initSlider = () => {
       },
     },
   });
+};
+const initSlider = () => {
+  createSlider ();
 
-  isEffect();
+  updateEffectVisibillity();
 
   const applyEffect = ({filter, unit = ''}, value) => {
     imagePreview.style.filter = `${filter }(${ value }${unit })`;
@@ -66,7 +65,7 @@ const initSlider = () => {
   });
 
   effectList.addEventListener('change', (evt) => {
-    isEffect();
+    updateEffectVisibillity();
     const effect = evt.target.value;
     if (effect in EffectSettings) {
       effectSlider.noUiSlider.updateOptions(
@@ -80,4 +79,9 @@ const initSlider = () => {
   });
 };
 
-export {initSlider};
+const destroySlider = () => {
+  effectSlider.noUiSlider.destroy();
+};
+
+
+export {initSlider, destroySlider};

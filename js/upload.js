@@ -1,7 +1,7 @@
 import {isEscapeKey, hideElement, showElement} from './util.js';
 import { pristine } from './validation.js';
 import {onControlScaleBiggerClick, onControlScaleSmallerClick} from './scaling.js';
-import { initSlider } from './effects.js';
+import { initSlider, destroySlider } from './effects.js';
 
 const body = document.body;
 const uploadForm = document.querySelector('.img-upload__form');
@@ -38,6 +38,7 @@ function closeUploadForm () {
   document.removeEventListener('keydown', onDocumentKeydown);
   controlScaleBigger.removeEventListener('click', onControlScaleBiggerClick);
   controlScaleSmaller.removeEventListener('click', onControlScaleSmallerClick);
+  destroySlider();
   uploadControl.value = '';
   hashtagField.value = '';
   descriptionField.value = '';
