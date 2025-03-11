@@ -1,6 +1,6 @@
 import {isEscapeKey, hideElement, showElement} from './util.js';
 import { pristine } from './validation.js';
-import {onControlScaleBiggerClick, onControlScaleSmallerClick} from './scaling.js';
+import { initScaling, destroyScaling } from './scaling.js';
 import { initSlider, destroySlider } from './effects.js';
 
 const body = document.body;
@@ -10,8 +10,6 @@ const editingForm = uploadForm.querySelector('.img-upload__overlay');
 const closeButton = uploadForm.querySelector('.img-upload__cancel');
 const hashtagField = uploadForm.querySelector('.text__hashtags');
 const descriptionField = uploadForm.querySelector('.text__description');
-const controlScaleSmaller = document.querySelector('.scale__control--smaller');
-const controlScaleBigger = document.querySelector('.scale__control--bigger');
 
 
 const onDocumentKeydown = (evt) => {
@@ -27,8 +25,7 @@ const onUploadControlChange = () => {
   showElement(editingForm);
   body.classList.add('modal');
   document.addEventListener('keydown', onDocumentKeydown);
-  controlScaleBigger.addEventListener('click', onControlScaleBiggerClick);
-  controlScaleSmaller.addEventListener('click', onControlScaleSmallerClick);
+  initScaling();
   initSlider();
 };
 
@@ -36,8 +33,7 @@ function closeUploadForm () {
   hideElement(editingForm);
   body.classList.remove('modal');
   document.removeEventListener('keydown', onDocumentKeydown);
-  controlScaleBigger.removeEventListener('click', onControlScaleBiggerClick);
-  controlScaleSmaller.removeEventListener('click', onControlScaleSmallerClick);
+  destroyScaling();
   destroySlider();
   uploadControl.value = '';
   hashtagField.value = '';
@@ -53,7 +49,7 @@ closeButton.addEventListener('click', onCloseButtonClick);
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
-    uploadForm.submit(); //в какой момент убирать обработчик и что правильно в подключать в main.js?
+    uploadForm.submit();
   }
 });
 

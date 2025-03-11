@@ -9,6 +9,8 @@ const SCALE_DIRECTION = {
 
 const controlScaleValue = document.querySelector('.scale__control--value');
 const imagePreview = document.querySelector('.img-upload__preview');
+const controlScaleSmaller = document.querySelector('.scale__control--smaller');
+const controlScaleBigger = document.querySelector('.scale__control--bigger');
 
 let currentValue = DEFAULT_SCALE_VALUE;
 
@@ -19,21 +21,32 @@ const changeScale = (direction) => {
   } else if (direction === SCALE_DIRECTION.DECREASE && currentValue > MIN_SCALE_VALUE) {
     currentValue -= SCALE_STEP;
   }
+  return currentValue;
 };
 
-const changePictureScale = (value) => {
-  controlScaleValue.value = `${value}%`;
-  imagePreview.style.transform = `scale(${ value / 100 })`;
+const changePictureScale = (direction) => {
+  changeScale(direction);
+  controlScaleValue.value = `${currentValue}%`;
+  imagePreview.style.transform = `scale(${ currentValue / 100 })`;
 };
 
 const onControlScaleBiggerClick = () => {
-  changeScale('increase');
-  changePictureScale(currentValue);
+  changePictureScale(SCALE_DIRECTION.INCREASE);
 };
 
 const onControlScaleSmallerClick = () => {
-  changeScale('decrease');
-  changePictureScale(currentValue);
+  changePictureScale(SCALE_DIRECTION.DECREASE);
 };
 
-export {onControlScaleBiggerClick, onControlScaleSmallerClick};
+
+const initScaling = () => {
+  controlScaleBigger.addEventListener('click', onControlScaleBiggerClick);
+  controlScaleSmaller.addEventListener('click', onControlScaleSmallerClick);
+};
+
+const destroyScaling = () => {
+  controlScaleBigger.removeEventListener('click', onControlScaleBiggerClick);
+  controlScaleSmaller.removeEventListener('click', onControlScaleSmallerClick);
+};
+
+export { initScaling, destroyScaling };
