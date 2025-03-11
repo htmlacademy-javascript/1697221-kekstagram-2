@@ -2,7 +2,7 @@ const DEFAULT_SCALE_VALUE = 100;
 const SCALE_STEP = 25;
 const MAX_SCALE_VALUE = 100;
 const MIN_SCALE_VALUE = 25;
-const SCALE_DIRECTION = {
+const ScalingDirections = {
   INCREASE: 'increase',
   DECREASE: 'decrease',
 };
@@ -16,9 +16,9 @@ let currentValue = DEFAULT_SCALE_VALUE;
 
 
 const changeScale = (direction) => {
-  if (direction === SCALE_DIRECTION.INCREASE && currentValue < MAX_SCALE_VALUE) {
+  if (direction === ScalingDirections.INCREASE && currentValue < MAX_SCALE_VALUE) {
     currentValue += SCALE_STEP;
-  } else if (direction === SCALE_DIRECTION.DECREASE && currentValue > MIN_SCALE_VALUE) {
+  } else if (direction === ScalingDirections.DECREASE && currentValue > MIN_SCALE_VALUE) {
     currentValue -= SCALE_STEP;
   }
   return currentValue;
@@ -31,11 +31,11 @@ const changePictureScale = (direction) => {
 };
 
 const onControlScaleBiggerClick = () => {
-  changePictureScale(SCALE_DIRECTION.INCREASE);
+  changePictureScale(ScalingDirections.INCREASE);
 };
 
 const onControlScaleSmallerClick = () => {
-  changePictureScale(SCALE_DIRECTION.DECREASE);
+  changePictureScale(ScalingDirections.DECREASE);
 };
 
 

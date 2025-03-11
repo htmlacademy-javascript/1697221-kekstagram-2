@@ -2,11 +2,11 @@ import { hideElement, showElement } from './util.js';
 
 const SLIDER_CONNECT = 'lower';
 const EffectSettings = {
-  chrome : { min: 0, max: 1, step: 0.1, start : 1, filter: 'grayscale' },
-  sepia : { min: 0, max: 1, step: 0.1, start : 1, filter: 'sepia' },
-  marvin : { min: 0, max: 100, step: 1, start : 100, filter: 'invert', unit: '%'},
-  phobos : { min: 0, max: 3, step: 0.1, start : 3, filter: 'blur', unit: 'px' },
-  heat:  { min: 1, max: 3, step: 0.1, start : 3, filter: 'brightness' },
+  CHROME : { min: 0, max: 1, step: 0.1, start : 1, filter: 'grayscale' },
+  SEPIA : { min: 0, max: 1, step: 0.1, start : 1, filter: 'sepia' },
+  MARVIN : { min: 0, max: 100, step: 1, start : 100, filter: 'invert', unit: '%'},
+  PHOBOS : { min: 0, max: 3, step: 0.1, start : 3, filter: 'blur', unit: 'px' },
+  HEAT:  { min: 1, max: 3, step: 0.1, start : 3, filter: 'brightness' },
 };
 
 const effectLevel = document.querySelector('.img-upload__effect-level');
@@ -29,11 +29,11 @@ const updateEffectVisibillity = (checkedEffect) => {
 const createSlider = () => {
   noUiSlider.create(effectSlider, {
     range: {
-      min: EffectSettings.chrome.min,
-      max: EffectSettings.chrome.max,
+      min: EffectSettings.CHROME.min,
+      max: EffectSettings.CHROME.max,
     },
-    start: EffectSettings.chrome.start,
-    step: EffectSettings.chrome.step,
+    start: EffectSettings.CHROME.start,
+    step: EffectSettings.CHROME.step,
     connect: SLIDER_CONNECT,
     format: {
       to: function (value) {
@@ -51,7 +51,7 @@ const applyEffect = ({filter, unit = ''}, value) => {
 };
 
 const onEffectListChange = (evt) => {
-  effect = evt.target.value;
+  effect = evt.target.value.toUpperCase();
   updateEffectVisibillity(effect);
   if (effect in EffectSettings) {
     effectSlider.noUiSlider.updateOptions(

@@ -1,12 +1,12 @@
-const HASHTAG_QUANTITY = 5;
+const MAX_HASHTAG_QUANTITY = 5;
 const COMMENT_MAX_LENGTH = 140;
 const HASHTAG_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const Errors = {
-  hashtagQuantity: 'Превышено количество хэштегов',
-  hashtagName:'Введён невалидный хэштег',
-  hashtagDuplicate:'Хэштеги повторяются',
-  commentLength: 'Длина комментария больше 140 символов'
+  HASHTAG_QUANTITY: 'Превышено количество хэштегов',
+  HASHTAG_NAME:'Введён невалидный хэштег',
+  HASHTAG_DUPLICATE:'Хэштеги повторяются',
+  COMMENT_LENGTH: 'Длина комментария больше 140 символов'
 };
 
 const uploadForm = document.querySelector('.img-upload__form');
@@ -24,7 +24,7 @@ const getHashtags = (value) => value.trim() ? value.toLowerCase().trim().split(/
 
 const validateHashtagsQuantity = (value) => {
   const hashtags = getHashtags(value);
-  return hashtags.length <= HASHTAG_QUANTITY;
+  return hashtags.length <= MAX_HASHTAG_QUANTITY;
 };
 
 const validateHashtagName = (value) => {
@@ -39,9 +39,9 @@ const validateHashtagDuplicate = (value) => {
 
 const validateDescription = (value) => value.trim().length <= COMMENT_MAX_LENGTH;
 
-pristine.addValidator(hashtagField, validateHashtagsQuantity, Errors.hashtagQuantity);
-pristine.addValidator(hashtagField, validateHashtagName, Errors.hashtagName);
-pristine.addValidator(hashtagField, validateHashtagDuplicate, Errors.hashtagDuplicate);
-pristine.addValidator(descriptionField, validateDescription, Errors.commentLength);
+pristine.addValidator(hashtagField, validateHashtagsQuantity, Errors.HASHTAG_QUANTITY);
+pristine.addValidator(hashtagField, validateHashtagName, Errors.HASHTAG_NAME);
+pristine.addValidator(hashtagField, validateHashtagDuplicate, Errors.HASHTAG_DUPLICATE);
+pristine.addValidator(descriptionField, validateDescription, Errors.COMMENT_LENGTH);
 
 export {pristine};
