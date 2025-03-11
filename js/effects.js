@@ -15,9 +15,10 @@ const effectValue = document.querySelector('.effect-level__value');
 const effectList = document.querySelector('.effects__list');
 const imagePreview = document.querySelector('.img-upload__preview');
 
-const updateEffectVisibillity = () => {
-  const effect = document.querySelector('input[name="effect"]:checked').value;
-  if(effect in EffectSettings) {
+let effect;
+
+const updateEffectVisibillity = (checkedEffect) => {
+  if(checkedEffect in EffectSettings) {
     showElement(effectLevel);
   } else {
     hideElement(effectLevel);
@@ -49,11 +50,9 @@ const applyEffect = ({filter, unit = ''}, value) => {
   imagePreview.style.filter = `${ filter }(${ value }${unit })`;
 };
 
-let effect;
-
 const onEffectListChange = (evt) => {
-  updateEffectVisibillity();
   effect = evt.target.value;
+  updateEffectVisibillity(effect);
   if (effect in EffectSettings) {
     effectSlider.noUiSlider.updateOptions(
       {range: {
@@ -66,9 +65,11 @@ const onEffectListChange = (evt) => {
 };
 
 const initSlider = () => {
+  const initialEffect = document.querySelector('input[name="effect"]:checked').value;
+
   createSlider ();
 
-  updateEffectVisibillity();
+  updateEffectVisibillity(initialEffect);
 
   effectList.addEventListener('change', onEffectListChange);
 
