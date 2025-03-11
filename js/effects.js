@@ -44,44 +44,49 @@ const createSlider = () => {
     },
   });
 };
+
+const applyEffect = ({filter, unit = ''}, value) => {
+  imagePreview.style.filter = `${ filter }(${ value }${unit })`;
+};
+
+let effect;
+
+const onEffectListChange = (evt) => {
+  updateEffectVisibillity();
+  effect = evt.target.value;
+  if (effect in EffectSettings) {
+    effectSlider.noUiSlider.updateOptions(
+      {range: {
+        min: EffectSettings[effect].min,
+        max: EffectSettings[effect].max,
+      },
+      step: EffectSettings[effect].step,
+      start: EffectSettings[effect].start,});
+  }
+};
+
 const initSlider = () => {
   createSlider ();
 
   updateEffectVisibillity();
 
-  const applyEffect = ({filter, unit = ''}, value) => {
-    imagePreview.style.filter = `${filter }(${ value }${unit })`;
-  };
+  effectList.addEventListener('change', onEffectListChange);
 
   effectSlider.noUiSlider.on('update', () => {
     const currentEffectValue = effectSlider.noUiSlider.get();
     effectValue.value = currentEffectValue;
-    const effect = document.querySelector('input[name="effect"]:checked').value;
     if (effect in EffectSettings) {
       applyEffect(EffectSettings[effect], currentEffectValue);
     } else {
       imagePreview.style.filter = 'none';
     }
   });
-
-  effectList.addEventListener('change', (evt) => {
-    updateEffectVisibillity();
-    const effect = evt.target.value;
-    if (effect in EffectSettings) {
-      effectSlider.noUiSlider.updateOptions(
-        {range: {
-          min: EffectSettings[effect].min,
-          max: EffectSettings[effect].max,
-        },
-        step: EffectSettings[effect].step,
-        start: EffectSettings[effect].start,});
-    }
-  });
 };
 
 const destroySlider = () => {
   effectSlider.noUiSlider.destroy();
+  effectList.removeEventListener('change', onEffectListChange);
 };
 
 
-export {initSlider, destroySlider};
+export { initSlider, destroySlider};
