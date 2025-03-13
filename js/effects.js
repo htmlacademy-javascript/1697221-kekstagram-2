@@ -36,12 +36,8 @@ const createSlider = () => {
     step: EffectSettings.CHROME.step,
     connect: SLIDER_CONNECT,
     format: {
-      to: function (value) {
-        return +value;
-      },
-      from: function (value) {
-        return value;
-      },
+      to: (value) => +value,
+      from: (value) => value,
     },
   });
 };
