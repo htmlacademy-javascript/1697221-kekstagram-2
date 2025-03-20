@@ -21,7 +21,7 @@ const pristine = new Pristine (uploadForm, {
 },
 false);
 
-const getHashtags = (value) => value.trim() ? value.toLowerCase().trim().split(/\s+/) : [];
+const getHashtags = (value) => value.toLowerCase().trim().split(/\s+/).filter(Boolean);
 
 const validateHashtagsQuantity = (value) => {
   const hashtags = getHashtags(value);
