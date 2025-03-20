@@ -18,7 +18,8 @@ const pristine = new Pristine (uploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
   errorTextClass: 'img-upload__field-wrapper--error'
-});
+},
+false);
 
 const getHashtags = (value) => value.trim() ? value.toLowerCase().trim().split(/\s+/) : [];
 

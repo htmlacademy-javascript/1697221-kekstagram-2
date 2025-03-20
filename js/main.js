@@ -1,12 +1,11 @@
 // import {createPhotoArray} from './data.js';
 import {renderGallery} from './previews.js';
-// import './upload.js';
-import {setUserFormSubmit, closeUploadForm} from './upload.js';
+import {setUserFormSubmit} from './upload.js';
 import {getData} from './api.js';
+import { renderErrorLoadingMessage } from './alerts.js';
 
 getData()
-  .then((data) => renderGallery(data));
+  .then((data) => renderGallery(data))
+  .catch(() => renderErrorLoadingMessage());
 
-setUserFormSubmit(closeUploadForm);
-
-
+setUserFormSubmit();

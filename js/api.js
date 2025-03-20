@@ -1,30 +1,28 @@
-import {renderErrorLoadingMessage, renderErrorPostMessage} from './alerts.js';
+const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
+const Route = {
+  GET_DATA: '/data',
+  SEND_DATA: '/',
+};
 
-const getData = () => fetch('https://31.javascript.htmlacademy.pro/kekstagram/data')
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error();
-    }
-    return response.json();
-  })
-  .catch(() => {
-    renderErrorLoadingMessage();
-  });
+const Method = {
+  GET: 'GET',
+  POST: 'POST',
+};
 
-const sendData = (body) => fetch(
-  'https://31.javascript.htmlacademy.pro/kekstagram',
-  {
-    method: 'POST',
-    body,
-  })
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error();
-    }
-  })
-  .catch(() => {
-    renderErrorPostMessage();
-  });
+const load = (route, method = Method.GET, body = null) =>
+  fetch(`${BASE_URL}${route}`, {method, body})
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error();
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
 
+const getData = () => load(Route.GET_DATA);
+
+const sendData = (body) => load(Route.SEND_DATA, Method.POST, body);
 
 export {getData, sendData};

@@ -40,6 +40,7 @@ function closeUploadForm () {
   uploadControl.value = '';
   hashtagField.value = '';
   descriptionField.value = '';
+  renderSuccessPostMessage();
 }
 
 const onCloseButtonClick = () => closeUploadForm();
@@ -57,7 +58,7 @@ const unblockSubmitButton = () => {
 };
 
 
-const setUserFormSubmit = (onSuccess) => {
+const setUserFormSubmit = () => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -66,8 +67,7 @@ const setUserFormSubmit = (onSuccess) => {
       blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(() => {
-          onSuccess();
-          renderSuccessPostMessage();
+          closeUploadForm();
         })
         .catch(() => {
           renderErrorPostMessage();
@@ -77,6 +77,5 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-
-export {setUserFormSubmit, closeUploadForm};
+export {setUserFormSubmit};
 

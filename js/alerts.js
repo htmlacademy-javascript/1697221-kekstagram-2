@@ -26,7 +26,7 @@ const renderPostMessage = (result) => {
   if (result === SendingResult.SUCCESS) {
     message = successfulSendingMessageTemplate.cloneNode(true);
     button = message.querySelector('.success__button');
-  } else {
+  } else if (result === SendingResult.ERROR) {
     message = errorSendingMessageTemplate.cloneNode(true);
     button = message.querySelector('.error__button');
   }
@@ -51,8 +51,8 @@ const renderPostMessage = (result) => {
 
   function onDocumentClick (evt) {
     const messageBox = message.querySelector('div');
-    const click = evt.composedPath().includes(messageBox);
-    if (!click) {
+    const isClickOnMessage = evt.composedPath().includes(messageBox);
+    if (!isClickOnMessage) {
       removeMessage();
     }
   }
