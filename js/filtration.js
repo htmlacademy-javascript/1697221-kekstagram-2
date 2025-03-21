@@ -20,9 +20,9 @@ const showFilterSection = () => {
   }
 };
 
-const sortByDefault = () => 0;
-const sortByRandom = () => Math.random() - 0.5;
-const sortByCommentsQuantity = (postA, postB) => postB.comments.length - postA.comments.length;
+// const sortByDefault = () => 0;
+// const sortByRandom = () => Math.random() - 0.5;
+// const sortByCommentsQuantity = (postA, postB) => postB.comments.length - postA.comments.length;
 
 // onFilterDefault = () => {};
 
