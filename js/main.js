@@ -1,7 +1,16 @@
-import {createPhotoArray} from './data.js';
+// import {createPhotoArray} from './data.js';
 import {renderGallery} from './previews.js';
-import './upload.js';
+import {setUserFormSubmit} from './upload.js';
+import {getData} from './api.js';
+import { renderErrorLoadingMessage } from './alerts.js';
+import {showFilterSection} from './filtration.js';
+// import './filtration.js';
 
-renderGallery(createPhotoArray());
+getData()
+  .then((data) => {
+    renderGallery(data);
+    showFilterSection();
+  })
+  .catch(() => renderErrorLoadingMessage());
 
-
+setUserFormSubmit();

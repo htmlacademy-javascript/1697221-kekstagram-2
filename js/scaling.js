@@ -14,7 +14,6 @@ const controlScaleBigger = document.querySelector('.scale__control--bigger');
 
 let currentValue = DEFAULT_SCALE_VALUE;
 
-
 const changeScale = (direction) => {
   if (direction === ScalingDirections.INCREASE && currentValue < MAX_SCALE_VALUE) {
     currentValue += SCALE_STEP;

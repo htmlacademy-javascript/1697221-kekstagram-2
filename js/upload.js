@@ -2,6 +2,8 @@ import {isEscapeKey, hideElement, showElement} from './util.js';
 import { pristine } from './validation.js';
 import { initScaling, destroyScaling } from './scaling.js';
 import { initSlider, destroySlider } from './effects.js';
+import {renderSuccessPostMessage, renderErrorPostMessage} from './alerts.js';
+import {sendData} from './api.js';
 
 const body = document.body;
 const uploadForm = document.querySelector('.img-upload__form');
@@ -10,7 +12,7 @@ const editingForm = uploadForm.querySelector('.img-upload__overlay');
 const closeButton = uploadForm.querySelector('.img-upload__cancel');
 const hashtagField = uploadForm.querySelector('.text__hashtags');
 const descriptionField = uploadForm.querySelector('.text__description');
-
+const submitButton = uploadForm.querySelector('.img-upload__submit');
 
 const onDocumentKeydown = (evt) => {
   if ((hashtagField === document.activeElement || descriptionField === document.activeElement) && isEscapeKey(evt)) {
@@ -38,6 +40,7 @@ function closeUploadForm () {
   uploadControl.value = '';
   hashtagField.value = '';
   descriptionField.value = '';
+  renderSuccessPostMessage();
 }
 
 const onCloseButtonClick = () => closeUploadForm();
@@ -46,11 +49,33 @@ uploadControl.addEventListener('change', onUploadControlChange);
 
 closeButton.addEventListener('click', onCloseButtonClick);
 
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    uploadForm.submit();
-  }
-});
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
 
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
+
+
+const setUserFormSubmit = () => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(() => {
+          closeUploadForm();
+        })
+        .catch(() => {
+          renderErrorPostMessage();
+        })
+        .finally(unblockSubmitButton);
+    }
+  });
+};
+
+export {setUserFormSubmit};
 
