@@ -27,15 +27,7 @@ const renderPreviews = (array) => {
 
 const getPictureData = (array, id) => array.find((dataItem) => dataItem.id === id);
 
-const clearGallery = () => {
-  const pictures = picturesSection.querySelectorAll('.picture');
-  if (pictures.length > 0) {
-    pictures.forEach((picture) => picture.remove());
-  }
-};
-
 const renderGallery = (array) => {
-  clearGallery();
   renderPreviews(array);
 
   picturesSection.addEventListener('click', (evt) => {

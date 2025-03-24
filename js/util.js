@@ -26,4 +26,12 @@ const showElement = (element) => {
   element.classList.remove('hidden');
 };
 
-export {getRandomNumber, getId, isEscapeKey, hideElement, showElement};
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomNumber, getId, isEscapeKey, hideElement, showElement, debounce};
