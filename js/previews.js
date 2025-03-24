@@ -3,6 +3,7 @@ import {openBigPicture} from './modal.js';
 const picturesSection = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
+
 const createPreview = ({url, description, likes, comments, id}) => {
   const element = pictureTemplate.cloneNode(true);
   const img = element.querySelector('.picture__img');
@@ -26,7 +27,15 @@ const renderPreviews = (array) => {
 
 const getPictureData = (array, id) => array.find((dataItem) => dataItem.id === id);
 
+const clearGallery = () => {
+  const pictures = picturesSection.querySelectorAll('.picture');
+  if (pictures.length > 0) {
+    pictures.forEach((picture) => picture.remove());
+  }
+};
+
 const renderGallery = (array) => {
+  clearGallery();
   renderPreviews(array);
 
   picturesSection.addEventListener('click', (evt) => {
@@ -38,6 +47,5 @@ const renderGallery = (array) => {
     }
   });
 };
-
 
 export {renderGallery};
