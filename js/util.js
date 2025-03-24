@@ -9,13 +9,6 @@ const getRandomNumber = (min, max) => { // функция, выбирающая 
   return Math.floor(result);
 };
 
-const getId = () => { // функция, создающая id по порядку
-  let startId = 1;
-  return function () {
-    return startId++;
-  };
-};
-
 const isEscapeKey = (evt) => evt.key === Keys.ESCAPE;
 
 const hideElement = (element) => {
@@ -34,4 +27,4 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-export {getRandomNumber, getId, isEscapeKey, hideElement, showElement, debounce};
+export {getRandomNumber, isEscapeKey, hideElement, showElement, debounce};
