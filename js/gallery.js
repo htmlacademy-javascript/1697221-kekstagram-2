@@ -32,36 +32,37 @@ const rerenderGallery = (array) => {
 
 const debouncedRenderGallery = debounce(rerenderGallery, RERENDER_DELAY);
 
-const onFilterDefaultButtonClick = (array) => {
-  removeActiveClass();
-  filterDefaultButton.classList.add('img-filters__button--active');
-  debouncedRenderGallery(array);
-};
-
 const sortByRandom = () => Math.random() - 0.5;
-
-const onFilterRandomButtonClick = (array) => {
-  removeActiveClass();
-  filterRandomButton.classList.add('img-filters__button--active');
-  const modifiedArray = array.slice().sort(sortByRandom).slice(0, RANDOM_PHOTOS_QUANTITY);
-  debouncedRenderGallery(modifiedArray);
-};
 
 const sortByCommentsQuantity = (postA, postB) => postB.comments.length - postA.comments.length;
 
-const onFilterDiscussedButtonClick = (array) => {
+
+const Filters = {
+  DEFAULT: {buttonName: filterDefaultButton, arrayModifier: false, },
+  RANDOM: {buttonName: filterRandomButton, arrayModifier: true, sortingFunction: sortByRandom, lengthLimit: RANDOM_PHOTOS_QUANTITY},
+  DISCUSSED: {buttonName: filterDiscussedButton, arrayModifier: true, sortingFunction: sortByCommentsQuantity},
+};
+
+const modifyArray = (array, {arrayModifier, sortingFunction = () => 0, lengthLimit = array.length}) => {
+  if (arrayModifier) {
+    return array.slice().sort(sortingFunction).slice(0, lengthLimit);
+  }
+  return array;
+};
+
+const applyFilter = (filter, array) => {
   removeActiveClass();
-  filterDiscussedButton.classList.add('img-filters__button--active');
-  const modifiedArray = array.slice().sort(sortByCommentsQuantity);
+  filter.buttonName.classList.add('img-filters__button--active');
+  const modifiedArray = modifyArray(array, filter);
   debouncedRenderGallery(modifiedArray);
 };
 
 const initFilterSection = (array) => {
   filterSection.classList.remove('img-filters--inactive');
   if (filters) {
-    filterDefaultButton.addEventListener('click', () => onFilterDefaultButtonClick(array, debouncedRenderGallery));
-    filterRandomButton.addEventListener('click', () => onFilterRandomButtonClick(array, debouncedRenderGallery));
-    filterDiscussedButton.addEventListener('click', () => onFilterDiscussedButtonClick(array, debouncedRenderGallery));
+    filterDefaultButton.addEventListener('click', () => applyFilter(Filters.DEFAULT, array));
+    filterRandomButton.addEventListener('click', () => applyFilter(Filters.RANDOM, array));
+    filterDiscussedButton.addEventListener('click', () => applyFilter(Filters.DISCUSSED, array));
   }
 };
 

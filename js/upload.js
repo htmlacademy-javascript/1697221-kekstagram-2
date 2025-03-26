@@ -17,9 +17,12 @@ const hashtagField = uploadForm.querySelector('.text__hashtags');
 const descriptionField = uploadForm.querySelector('.text__description');
 const submitButton = uploadForm.querySelector('.img-upload__submit');
 const miniaturePreviews = document.querySelectorAll('.effects__preview');
+const error = document.querySelector('.error');
 
 const onDocumentKeydown = (evt) => {
-  if ((hashtagField === document.activeElement || descriptionField === document.activeElement) && isEscapeKey(evt)) {
+  if (error && isEscapeKey(evt)) {
+    evt.preventDefault();
+  } else if ((hashtagField === document.activeElement || descriptionField === document.activeElement) && isEscapeKey(evt)) {
     evt.preventDefault();
   } else if (isEscapeKey(evt)) {
     evt.preventDefault();
