@@ -1,5 +1,5 @@
 import {isEscapeKey, hideElement, showElement} from './util.js';
-import { pristine } from './validation.js';
+import { pristine, destroyValidator } from './validation.js';
 import { initScaling, destroyScaling } from './scaling.js';
 import { initSlider, destroySlider } from './effects.js';
 import {renderSuccessPostMessage, renderErrorPostMessage} from './alerts.js';
@@ -59,6 +59,7 @@ function closeUploadForm () {
   document.removeEventListener('keydown', onDocumentKeydown);
   destroyScaling();
   destroySlider();
+  destroyValidator();
   uploadControl.value = '';
   hashtagField.value = '';
   descriptionField.value = '';

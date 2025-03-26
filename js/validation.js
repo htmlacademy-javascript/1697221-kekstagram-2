@@ -18,8 +18,7 @@ const pristine = new Pristine (uploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
   errorTextClass: 'img-upload__field-wrapper--error'
-},
-false);
+});
 
 const getHashtags = (value) => value.toLowerCase().trim().split(/\s+/).filter(Boolean);
 
@@ -45,4 +44,8 @@ pristine.addValidator(hashtagField, validateHashtagName, Errors.HASHTAG_NAME);
 pristine.addValidator(hashtagField, validateHashtagDuplicate, Errors.HASHTAG_DUPLICATE);
 pristine.addValidator(descriptionField, validateDescription, Errors.COMMENT_LENGTH);
 
-export {pristine};
+const destroyValidator = () => {
+  pristine.destroy();
+};
+
+export {pristine, destroyValidator};
