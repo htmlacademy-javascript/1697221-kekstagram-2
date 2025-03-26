@@ -16,6 +16,7 @@ const closeButton = uploadForm.querySelector('.img-upload__cancel');
 const hashtagField = uploadForm.querySelector('.text__hashtags');
 const descriptionField = uploadForm.querySelector('.text__description');
 const submitButton = uploadForm.querySelector('.img-upload__submit');
+const miniaturePreviews = document.querySelectorAll('.effects__preview');
 
 const onDocumentKeydown = (evt) => {
   if ((hashtagField === document.activeElement || descriptionField === document.activeElement) && isEscapeKey(evt)) {
@@ -31,7 +32,12 @@ const showUploadPhoto = () => {
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
   if (matches) {
-    preview.src = URL.createObjectURL(file);
+    const imageUrl = URL.createObjectURL(file);
+    preview.src = imageUrl;
+    miniaturePreviews.forEach((miniature) => {
+      miniature.style.backgroundImage = `url(${ imageUrl })`;
+    });
+    preview.onload = () => URL.revokeObjectURL(imageUrl);
   }
 };
 
