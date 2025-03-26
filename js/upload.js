@@ -47,7 +47,7 @@ const showUploadPhoto = () => {
 const onUploadControlChange = () => {
   showUploadPhoto();
   showElement(editingForm);
-  body.classList.add('modal');
+  body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   initScaling();
   initSlider();
@@ -55,14 +55,13 @@ const onUploadControlChange = () => {
 
 function closeUploadForm () {
   hideElement(editingForm);
-  body.classList.remove('modal');
+  body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   destroyScaling();
   destroySlider();
   uploadControl.value = '';
   hashtagField.value = '';
   descriptionField.value = '';
-  renderSuccessPostMessage();
 }
 
 const onCloseButtonClick = () => closeUploadForm();
@@ -90,6 +89,7 @@ const setUserFormSubmit = () => {
       sendData(new FormData(evt.target))
         .then(() => {
           closeUploadForm();
+          renderSuccessPostMessage();
         })
         .catch(() => {
           renderErrorPostMessage();
