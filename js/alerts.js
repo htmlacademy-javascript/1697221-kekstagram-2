@@ -26,7 +26,7 @@ const renderPostMessage = (result) => {
   if (result === SendingResult.SUCCESS) {
     message = successfulSendingMessageTemplate.cloneNode(true);
     button = message.querySelector('.success__button');
-  } else if (result === SendingResult.ERROR) {
+  } if (result === SendingResult.ERROR) {
     message = errorSendingMessageTemplate.cloneNode(true);
     button = message.querySelector('.error__button');
   }

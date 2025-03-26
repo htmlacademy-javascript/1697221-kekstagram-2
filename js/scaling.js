@@ -37,8 +37,15 @@ const onControlScaleSmallerClick = () => {
   changePictureScale(ScalingDirections.DECREASE);
 };
 
+const resetScale = () => {
+  currentValue = DEFAULT_SCALE_VALUE;
+  controlScaleValue.value = `${currentValue}%`;
+  imagePreview.style.transform = `scale(${ currentValue / 100 })`;
+};
+
 
 const initScaling = () => {
+  resetScale();
   controlScaleBigger.addEventListener('click', onControlScaleBiggerClick);
   controlScaleSmaller.addEventListener('click', onControlScaleSmallerClick);
 };

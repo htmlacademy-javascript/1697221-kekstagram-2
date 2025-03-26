@@ -5,9 +5,12 @@ import { initSlider, destroySlider } from './effects.js';
 import {renderSuccessPostMessage, renderErrorPostMessage} from './alerts.js';
 import {sendData} from './api.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const body = document.body;
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadControl = uploadForm.querySelector('.img-upload__input');
+const preview = document.querySelector('.img-upload__preview img');
 const editingForm = uploadForm.querySelector('.img-upload__overlay');
 const closeButton = uploadForm.querySelector('.img-upload__cancel');
 const hashtagField = uploadForm.querySelector('.text__hashtags');
@@ -23,7 +26,17 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const showUploadPhoto = () => {
+  const file = uploadControl.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    preview.src = URL.createObjectURL(file);
+  }
+};
+
 const onUploadControlChange = () => {
+  showUploadPhoto();
   showElement(editingForm);
   body.classList.add('modal');
   document.addEventListener('keydown', onDocumentKeydown);
