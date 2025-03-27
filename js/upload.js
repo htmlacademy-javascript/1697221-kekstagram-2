@@ -2,7 +2,7 @@ import {isEscapeKey, hideElement, showElement} from './util.js';
 import { pristine, destroyValidator } from './validation.js';
 import { initScaling, destroyScaling } from './scaling.js';
 import { initSlider, destroySlider } from './effects.js';
-import {renderSuccessPostMessage, renderErrorPostMessage} from './alerts.js';
+import {renderSuccessPostMessage, renderErrorPostMessage, removeMessage} from './alerts.js';
 import {sendData} from './api.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -17,14 +17,16 @@ const hashtagField = uploadForm.querySelector('.text__hashtags');
 const descriptionField = uploadForm.querySelector('.text__description');
 const submitButton = uploadForm.querySelector('.img-upload__submit');
 const miniaturePreviews = document.querySelectorAll('.effects__preview');
-const error = document.querySelector('.error');
+
 
 const onDocumentKeydown = (evt) => {
+  const error = document.querySelector('.error');
   if (error && isEscapeKey(evt)) {
     evt.preventDefault();
+    removeMessage();
   } else if ((hashtagField === document.activeElement || descriptionField === document.activeElement) && isEscapeKey(evt)) {
     evt.preventDefault();
-  } else if (isEscapeKey(evt)) {
+  } else if (!error && isEscapeKey(evt)) {
     evt.preventDefault();
     closeUploadForm();
   }
@@ -79,7 +81,6 @@ const unblockSubmitButton = () => {
   submitButton.disabled = false;
 };
 
-
 const setUserFormSubmit = () => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -95,7 +96,9 @@ const setUserFormSubmit = () => {
         .catch(() => {
           renderErrorPostMessage();
         })
-        .finally(unblockSubmitButton);
+        .finally(() => {
+          unblockSubmitButton();
+        });
     }
   });
 };
