@@ -28,6 +28,10 @@ const updateEffectVisibillity = (checkedEffect) => {
 };
 
 const createSlider = () => {
+  if (effectSlider.noUiSlider) {
+    return;
+  }
+
   noUiSlider.create(effectSlider, {
     range: {
       min: EffectSettings.CHROME.min,
