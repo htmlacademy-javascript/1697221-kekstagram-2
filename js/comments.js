@@ -8,7 +8,6 @@ const commentsList = socialSection.querySelector('.social__comments');
 const commentLoader = socialSection.querySelector('.social__comments-loader');
 const shownCommentCounter = socialSection.querySelector('.social__comment-shown-count');
 
-
 const createComment = ({avatar, name, message}) => {
   const commentItem = document.createElement('li');
   commentItem.classList.add('social__comment');

@@ -23,13 +23,13 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-function openBigPicture (item) {
+const openBigPicture = (item) => {
   modal.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
   body.classList.add('modal-open');
   generateBigPicture(item);
   initCommentsSection(item);
-}
+};
 
 function closeBigPicture () {
   modal.classList.add('hidden');
