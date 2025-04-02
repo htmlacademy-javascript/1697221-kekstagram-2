@@ -8,7 +8,7 @@ const ScalingDirections = {
 };
 
 const controlScaleValue = document.querySelector('.scale__control--value');
-const imagePreview = document.querySelector('.img-upload__preview');
+const imagePreview = document.querySelector('.img-upload__preview img');
 const controlScaleSmaller = document.querySelector('.scale__control--smaller');
 const controlScaleBigger = document.querySelector('.scale__control--bigger');
 

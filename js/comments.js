@@ -8,7 +8,6 @@ const commentsList = socialSection.querySelector('.social__comments');
 const commentLoader = socialSection.querySelector('.social__comments-loader');
 const shownCommentCounter = socialSection.querySelector('.social__comment-shown-count');
 
-
 const createComment = ({avatar, name, message}) => {
   const commentItem = document.createElement('li');
   commentItem.classList.add('social__comment');
@@ -30,39 +29,48 @@ const renderComments = (start, final, comments) => {
   });
 };
 
+let currentItem;
+let startValue;
+let finalValue;
 
-const showComments = (item) => {
+const onCommentLoaderClick = () => {
+  startValue += STEP_LOADING_COMMENTS;
+  finalValue = startValue + STEP_LOADING_COMMENTS;
+
+  renderComments(startValue, finalValue, currentItem.comments);
+  shownCommentCounter.textContent = commentsList.childElementCount;
+
+  if (finalValue >= currentItem.comments.length) {
+    hideElement (commentLoader);
+    commentLoader.removeEventListener('click', onCommentLoaderClick);
+  }
+};
+
+const initCommentsSection = (item) => {
+  currentItem = item;
+  startValue = 0;
+  finalValue = startValue + STEP_LOADING_COMMENTS;
   totalComments.textContent = item.comments.length;
   commentsList.innerHTML = '';
-  let startValue = 0;
-  let finalValue = startValue + STEP_LOADING_COMMENTS;
 
   renderComments(startValue, finalValue, item.comments);
   shownCommentCounter.textContent = commentsList.childElementCount;
 
   if (finalValue >= item.comments.length) {
     hideElement (commentLoader);
+    commentLoader.removeEventListener('click', onCommentLoaderClick);
   } else {
     showElement(commentLoader);
+    commentLoader.addEventListener('click', onCommentLoaderClick);
   }
+};
 
-  const onCommentLoaderClick = () => {
-    startValue += STEP_LOADING_COMMENTS;
-    finalValue = startValue + STEP_LOADING_COMMENTS;
-
-    renderComments(startValue, finalValue, item.comments);
-    shownCommentCounter.textContent = commentsList.childElementCount;
-
-    if (finalValue >= item.comments.length) {
-      hideElement (commentLoader);
-      commentLoader.removeEventListener('click', onCommentLoaderClick);
-    }
-  };
-
+const destroyCommentSection = () => {
   commentLoader.removeEventListener('click', onCommentLoaderClick);
-  commentLoader.addEventListener('click', onCommentLoaderClick);
+  currentItem = null;
+  startValue = 0;
 };
 
 
-export {renderComments, showComments};
+export {renderComments, initCommentsSection, destroyCommentSection};
 

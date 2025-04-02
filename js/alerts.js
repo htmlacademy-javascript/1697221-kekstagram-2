@@ -1,10 +1,6 @@
 import {isEscapeKey} from './util.js';
 
 const ALERT_SHOW_TIME = 5000;
-const SendingResult = {
-  SUCCESS: 'success',
-  ERROR: 'error'
-};
 
 const body = document.body;
 const errorLoadingMessageTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
@@ -12,62 +8,54 @@ const successfulSendingMessageTemplate = document.querySelector('#success').cont
 const errorSendingMessageTemplate = document.querySelector('#error').content.querySelector('.error');
 
 const renderErrorLoadingMessage = () => {
-  const message = errorLoadingMessageTemplate.cloneNode(true);
-  body.append(message);
+  const errorLoadingMessage = errorLoadingMessageTemplate.cloneNode(true);
+  body.append(errorLoadingMessage);
   setTimeout(() => {
-    message.remove();
+    errorLoadingMessage.remove();
   }, ALERT_SHOW_TIME);
 };
 
-const renderPostMessage = (result) => {
-  let message;
-  let button;
+let message;
 
-  if (result === SendingResult.SUCCESS) {
-    message = successfulSendingMessageTemplate.cloneNode(true);
-    button = message.querySelector('.success__button');
-  } if (result === SendingResult.ERROR) {
-    message = errorSendingMessageTemplate.cloneNode(true);
-    button = message.querySelector('.error__button');
-  }
+const removeMessage = () => {
+  message.remove();
+  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('click', onDocumentClick);
+};
 
-  body.append(message);
+const onButtonClick = () => {
+  removeMessage();
+};
 
-  const removeMessage = () => {
-    message.remove();
-    document.removeEventListener('keydown', onDocumentKeydown);
-    document.removeEventListener('click', onDocumentClick);
-  };
-
-  const onButtonClick = () => {
+function onDocumentKeydown (evt) {
+  if (isEscapeKey(evt)) {
     removeMessage();
-  };
-
-  function onDocumentKeydown (evt) {
-    if (isEscapeKey(evt)) {
-      removeMessage();
-    }
   }
+}
 
-  function onDocumentClick (evt) {
-    const messageBox = message.querySelector('div');
-    const isClickOnMessage = evt.composedPath().includes(messageBox);
-    if (!isClickOnMessage) {
-      removeMessage();
-    }
+function onDocumentClick (evt) {
+  const messageBox = message.querySelector('div');
+  const isClickOnMessage = evt.composedPath().includes(messageBox);
+  if (!isClickOnMessage) {
+    removeMessage();
   }
+}
 
+const renderMessage = (messageName) => {
+  message = messageName.cloneNode(true);
+  const button = message.querySelector('button');
+  body.append(message);
   button.addEventListener('click', onButtonClick);
   document.addEventListener('keydown', onDocumentKeydown);
   document.addEventListener('click', onDocumentClick);
 };
 
 const renderSuccessPostMessage = () => {
-  renderPostMessage(SendingResult.SUCCESS);
+  renderMessage(successfulSendingMessageTemplate);
 };
 
 const renderErrorPostMessage = () => {
-  renderPostMessage(SendingResult.ERROR);
+  renderMessage(errorSendingMessageTemplate);
 };
 
-export {renderErrorLoadingMessage, renderSuccessPostMessage, renderErrorPostMessage};
+export {renderErrorLoadingMessage, renderSuccessPostMessage, renderErrorPostMessage, removeMessage};

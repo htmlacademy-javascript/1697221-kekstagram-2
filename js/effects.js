@@ -13,7 +13,8 @@ const effectLevel = document.querySelector('.img-upload__effect-level');
 const effectSlider = document.querySelector('.effect-level__slider');
 const effectValue = document.querySelector('.effect-level__value');
 const effectList = document.querySelector('.effects__list');
-const imagePreview = document.querySelector('.img-upload__preview');
+const defaultEffect = effectList.querySelector('#effect-none');
+const imagePreview = document.querySelector('.img-upload__preview img');
 
 let effect;
 
@@ -27,6 +28,10 @@ const updateEffectVisibillity = (checkedEffect) => {
 };
 
 const createSlider = () => {
+  if (effectSlider.noUiSlider) {
+    return;
+  }
+
   noUiSlider.create(effectSlider, {
     range: {
       min: EffectSettings.CHROME.min,
@@ -61,11 +66,11 @@ const onEffectListChange = (evt) => {
 };
 
 const initSlider = () => {
-  const initialEffect = document.querySelector('input[name="effect"]:checked').value;
+  defaultEffect.checked = true;
 
   createSlider ();
 
-  updateEffectVisibillity(initialEffect);
+  updateEffectVisibillity(defaultEffect.value);
 
   effectList.addEventListener('change', onEffectListChange);
 

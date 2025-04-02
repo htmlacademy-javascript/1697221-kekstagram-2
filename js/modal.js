@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import {showComments} from './comments.js';
+import {initCommentsSection, destroyCommentSection} from './comments.js';
 
 
 const body = document.body;
@@ -23,18 +23,19 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-function openBigPicture (item) {
+const openBigPicture = (item) => {
   modal.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
   body.classList.add('modal-open');
   generateBigPicture(item);
-  showComments(item);
-}
+  initCommentsSection(item);
+};
 
 function closeBigPicture () {
   modal.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
   body.classList.remove('modal-open');
+  destroyCommentSection();
 }
 
 const onCloseButtonClick = () => closeBigPicture();
