@@ -25,9 +25,9 @@ const clearGallery = () => {
   }
 };
 
-const rerenderGallery = (array) => {
+const rerenderGallery = (items) => {
   clearGallery();
-  renderGallery(array);
+  renderGallery(items);
 };
 
 const debouncedRenderGallery = debounce(rerenderGallery, RERENDER_DELAY);
@@ -43,32 +43,32 @@ const Filters = {
   DISCUSSED: {buttonName: filterDiscussedButton, arrayModifier: true, sortingFunction: sortByCommentsQuantity},
 };
 
-const modifyArray = (array, {arrayModifier, sortingFunction = () => 0, lengthLimit = array.length}) => {
+const modifyArray = (items, {arrayModifier, sortingFunction = () => 0, lengthLimit = items.length}) => {
   if (arrayModifier) {
-    return array.slice().sort(sortingFunction).slice(0, lengthLimit);
+    return items.slice().sort(sortingFunction).slice(0, lengthLimit);
   }
-  return array;
+  return items;
 };
 
-const applyFilter = (filter, array) => {
+const applyFilter = (filter, items) => {
   removeActiveClass();
   filter.buttonName.classList.add('img-filters__button--active');
-  const modifiedArray = modifyArray(array, filter);
-  debouncedRenderGallery(modifiedArray);
+  const filteredItems = modifyArray(items, filter);
+  debouncedRenderGallery(filteredItems);
 };
 
-const initFilterSection = (array) => {
+const initFilterSection = (items) => {
   filterSection.classList.remove('img-filters--inactive');
   if (filters) {
-    filterDefaultButton.addEventListener('click', () => applyFilter(Filters.DEFAULT, array));
-    filterRandomButton.addEventListener('click', () => applyFilter(Filters.RANDOM, array));
-    filterDiscussedButton.addEventListener('click', () => applyFilter(Filters.DISCUSSED, array));
+    filterDefaultButton.addEventListener('click', () => applyFilter(Filters.DEFAULT, items));
+    filterRandomButton.addEventListener('click', () => applyFilter(Filters.RANDOM, items));
+    filterDiscussedButton.addEventListener('click', () => applyFilter(Filters.DISCUSSED, items));
   }
 };
 
-const initGallery = (array) => {
-  renderGallery(array);
-  initFilterSection(array);
+const initGallery = (items) => {
+  renderGallery(items);
+  initFilterSection(items);
 };
 
 export {initGallery};
