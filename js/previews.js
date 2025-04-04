@@ -16,25 +16,25 @@ const createPreview = ({url, description, likes, comments, id}) => {
   return element;
 };
 
-const renderPreviews = (array) => {
+const renderPreviews = (items) => {
   const fragment = document.createDocumentFragment();
-  array.forEach((item) => {
+  items.forEach((item) => {
     const post = createPreview(item);
     fragment.append(post);
   });
   picturesSection.append(fragment);
 };
 
-const getPictureData = (array, id) => array.find((dataItem) => dataItem.id === id);
+const getPictureData = (items, id) => items.find((dataItem) => dataItem.id === id);
 
-const renderGallery = (array) => {
-  renderPreviews(array);
+const renderGallery = (items) => {
+  renderPreviews(items);
 
   picturesSection.addEventListener('click', (evt) => {
     if (evt.target.closest('.picture')) {
       evt.preventDefault();
       const id = Number(evt.target.closest('.picture').dataset.id);
-      const item = getPictureData (array, id);
+      const item = getPictureData (items, id);
       openBigPicture(item);
     }
   });

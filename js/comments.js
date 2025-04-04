@@ -11,19 +11,25 @@ const shownCommentCounter = socialSection.querySelector('.social__comment-shown-
 const createComment = ({avatar, name, message}) => {
   const commentItem = document.createElement('li');
   commentItem.classList.add('social__comment');
-  commentItem.innerHTML = `
-    <img  class="social__picture"
-          src="${avatar}"
-          alt="${name}"
-          width="35"
-          height="35">
-    <p class="social__text">${message}</p>`;
+
+  const picture = document.createElement('img');
+  picture.classList.add('social__picture');
+  picture.src = avatar;
+  picture.alt = name;
+  picture.width = 35;
+  picture.height = 35;
+
+  const text = document.createElement('p');
+  text.classList.add('social__text');
+  text.textContent = message;
+
+  commentItem.append(picture, text);
   return commentItem;
 };
 
 const renderComments = (start, final, comments) => {
-  const currentArray = comments.slice(start, final);
-  currentArray.forEach((item) => {
+  const shownComments = comments.slice(start, final);
+  shownComments.forEach((item) => {
     const comment = createComment(item);
     commentsList.append(comment);
   });
